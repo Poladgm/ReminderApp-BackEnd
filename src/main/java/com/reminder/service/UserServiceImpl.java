@@ -27,7 +27,7 @@ public class UserServiceImpl implements UserService {
 		return userDao.getAllUsers();
 	}
 
-	public User getById(String id) {
+	public User getById(int id) {
 		// TODO Auto-generated method stub
 		return userDao.getById(id);
 	}

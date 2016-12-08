@@ -14,9 +14,9 @@ public class EventServiceImpl implements EventService {
 	@Autowired
 	private EventDao eventDao;
 
-	public List<Event> getAllEvents() {
+	public List<Event> getMyEvents(String userId) {
 		// TODO Auto-generated method stub
-		return eventDao.getAllEvents();
+		return eventDao.getMyEvents(userId);
 	}
 
 	public Event getEventById(String eventId) {

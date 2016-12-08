@@ -15,17 +15,26 @@ public class Event extends BaseDomain {
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
-	private String eventId;
+	private int eventId;
 	private String title;
 	private String description;
 	private String eventCreatedDate;
 	private String deadLine;
+	private String userId;
 
-	public String getEventId() {
+	public String getUserId() {
+		return userId;
+	}
+
+	public void setUserId(String userId) {
+		this.userId = userId;
+	}
+
+	public int getEventId() {
 		return eventId;
 	}
 
-	public void setEventId(String eventId) {
+	public void setEventId(int eventId) {
 		this.eventId = eventId;
 	}
 

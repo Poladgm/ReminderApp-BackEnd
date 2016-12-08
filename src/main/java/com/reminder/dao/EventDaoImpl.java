@@ -5,6 +5,7 @@ import java.util.List;
 import javax.transaction.Transactional;
 
 import org.hibernate.HibernateException;
+import org.hibernate.Query;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -27,13 +28,10 @@ public class EventDaoImpl implements EventDao {
 	}
 
 	@Transactional
-	public List<Event> getAllEvents() {
-		Session session = sessionFactory.openSession();
-		List<Event> events = session.createQuery("from Event").list();
-		System.out.println("----List of Events-----");
-		System.out.println(events);
-		session.flush();
-		session.close();
+	public List<Event> getMyEvents(String userId) {
+		String hql = "from Event where userId='" + userId +"' ";
+		Query query = sessionFactory.openSession().createQuery(hql);
+		List<Event> events = (List<Event>)query.list();
 		return events;
 	}
 

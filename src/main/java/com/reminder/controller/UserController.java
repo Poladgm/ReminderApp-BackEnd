@@ -41,7 +41,7 @@ public class UserController {
 	}
 
 	@RequestMapping(value = "/user/{userId}", method = RequestMethod.GET)
-	public ResponseEntity<User> getUserById(@PathVariable("userId") String userId) {
+	public ResponseEntity<User> getUserById(@PathVariable("userId") int userId) {
 		System.out.println("------Starting getUserById method in controller");
 		user = userService.getById(userId);
 		if (user == null) {
@@ -58,6 +58,9 @@ public class UserController {
 	public ResponseEntity<User> createUser(@RequestBody User user) {
 		System.out.println("-----Starting the method register");
 
+		// Check it
+		user.setRole("USER");
+		
 		if (userService.getById(user.getUserId()) != null) {
 			user.setErrorCode("404");
 			user.setErrorMessage("With this is Id the record is already exist. Please Choose another id");
@@ -65,6 +68,7 @@ public class UserController {
 		} else {
 			System.out.println("------saving user in controller");
 			if (userService.saveUser(user)) {
+
 				user.setErrorCode("200");
 				user.setErrorMessage("Your registration is Successfull");
 

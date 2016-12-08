@@ -8,7 +8,7 @@ public interface UserService {
 
 List<User> getAllUsers();
 	
-	User getById(String id);
+	User getById(int id);
 	
 	User getByemailId(String emailId);
 	

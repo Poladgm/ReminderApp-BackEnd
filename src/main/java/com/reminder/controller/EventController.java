@@ -3,6 +3,8 @@ package com.reminder.controller;
 import java.util.Date;
 import java.util.List;
 
+import javax.servlet.http.HttpSession;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -32,13 +34,15 @@ public class EventController {
 		this.eventService = eventService;
 	}
 
-	@RequestMapping(value = "/event/getAllEvents", method = RequestMethod.GET)
-	public ResponseEntity<List<Event>> getAllEvents() {
+	@RequestMapping(value = "/event/getMyEvents", method = RequestMethod.GET)
+	public ResponseEntity<List<Event>> getAllEvents(HttpSession session) {
 		System.out.println("----Starting getAllEvents in EventController");
-		List<Event> events = eventService.getAllEvents();
+		String loggedInUser = (String) session.getAttribute("loggedInUserId");
+		List<Event> events = eventService.getMyEvents(loggedInUser);
 		if (events.isEmpty()) {
 			event.setErrorCode("404");
 			event.setErrorMessage("No event available");
+			events.add(event);
 		}
 		return new ResponseEntity<List<Event>>(events, HttpStatus.OK);
 	}
@@ -49,18 +53,20 @@ public class EventController {
 		Event event = eventService.getEventById(eventId);
 		if (event == null) {
 			event = new Event();
-			user.setErrorCode("404"); // NLP NullPointerException
-			user.setErrorMessage("User does not exist with this id:" + userId);
+			event.setErrorCode("404"); // NLP NullPointerException
+			event.setErrorMessage("User does not exist with this id:" + eventId);
 			return new ResponseEntity<Event>(event, HttpStatus.NO_CONTENT);
 		}
 		return new ResponseEntity<Event>(event, HttpStatus.OK);
 	}
 
 	@RequestMapping(value = "/event/addEvent/", method = RequestMethod.POST)
-	public ResponseEntity<Void> saveEvent(@RequestBody Event event) {
+	public ResponseEntity<Void> saveEvent(@RequestBody Event event, HttpSession session) {
 		System.out.println("---Saving Events---");
+		String loggedInUser = (String) session.getAttribute("loggedInUserId");
 		Date date = new Date();
 		event.setEventCreatedDate(date.toString());
+		event.setUserId(loggedInUser);
 		eventService.saveEvent(event);
 		return new ResponseEntity<Void>(HttpStatus.OK);
 

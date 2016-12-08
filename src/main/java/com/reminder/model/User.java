@@ -18,18 +18,28 @@ public class User extends BaseDomain {
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
-	private String userId;
+	private int userId;
 	private String fName;
-	private String lName; 
+	private String lName;
+	@Column(nullable = true, unique = true)
 	private String emailId;
 	private String phoneNo;
+	private String city;
 	private String password;
 
-	public String getUserId() {
+	public String getCity() {
+		return city;
+	}
+
+	public void setCity(String city) {
+		this.city = city;
+	}
+
+	public int getUserId() {
 		return userId;
 	}
 
-	public void setUserId(String userId) {
+	public void setUserId(int userId) {
 		this.userId = userId;
 	}
 
