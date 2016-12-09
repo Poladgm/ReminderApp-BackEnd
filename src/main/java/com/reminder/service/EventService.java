@@ -8,11 +8,11 @@ public interface EventService {
 
 	List<Event> getMyEvents(String userId);
 
-	Event getEventById(String eventId);
+	Event getEventById(int eventId);
 
 	boolean saveEvent(Event event);
 
-	Event updateEvent(String eventId, Event event);
+	Event updateEvent(int eventId, Event event);
 
-	boolean removeEvent(String eventId);
+	boolean removeEvent(int eventId);
 }

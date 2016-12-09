@@ -29,14 +29,14 @@ public class EventDaoImpl implements EventDao {
 
 	@Transactional
 	public List<Event> getMyEvents(String userId) {
-		String hql = "from Event where userId='" + userId +"' ";
+		String hql = "from Event where userId='" + userId + "' ";
 		Query query = sessionFactory.openSession().createQuery(hql);
-		List<Event> events = (List<Event>)query.list();
+		List<Event> events = (List<Event>) query.list();
 		return events;
 	}
 
 	@Transactional
-	public Event getEventById(String eventId) {
+	public Event getEventById(int eventId) {
 		Session session = sessionFactory.openSession();
 		Event event = (Event) session.get(Event.class, eventId);
 		System.out.println("----getEventById : " + event);
@@ -60,7 +60,7 @@ public class EventDaoImpl implements EventDao {
 	}
 
 	@Transactional
-	public Event updateEvent(String eventId, Event event) {
+	public Event updateEvent(int eventId, Event event) {
 		System.out.println("-----Starting update event in daoimpl");
 		Session session = sessionFactory.openSession();
 
@@ -76,7 +76,7 @@ public class EventDaoImpl implements EventDao {
 	}
 
 	@Transactional
-	public boolean removeEvent(String eventId) {
+	public boolean removeEvent(int eventId) {
 		Session session = sessionFactory.openSession();
 		// make the object persistent - Event
 		try {

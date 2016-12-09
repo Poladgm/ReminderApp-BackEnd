@@ -19,7 +19,7 @@ public class EventServiceImpl implements EventService {
 		return eventDao.getMyEvents(userId);
 	}
 
-	public Event getEventById(String eventId) {
+	public Event getEventById(int eventId) {
 		// TODO Auto-generated method stub
 		return eventDao.getEventById(eventId);
 	}
@@ -29,12 +29,12 @@ public class EventServiceImpl implements EventService {
 		return eventDao.saveEvent(event);
 	}
 
-	public Event updateEvent(String eventId, Event event) {
+	public Event updateEvent(int eventId, Event event) {
 		// TODO Auto-generated method stub
 		return eventDao.updateEvent(eventId, event);
 	}
 
-	public boolean removeEvent(String eventId) {
+	public boolean removeEvent(int eventId) {
 		// TODO Auto-generated method stub
 		return eventDao.removeEvent(eventId);
 	}

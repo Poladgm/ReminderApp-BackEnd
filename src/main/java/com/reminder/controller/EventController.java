@@ -48,7 +48,7 @@ public class EventController {
 	}
 
 	@RequestMapping(value = "/event/getEventById/{eventId}", method = RequestMethod.GET)
-	public ResponseEntity<Event> getEventById(@PathVariable("eventId") String eventId) {
+	public ResponseEntity<Event> getEventById(@PathVariable("eventId") int eventId) {
 		System.out.println("----Starting getBId in EventController----");
 		Event event = eventService.getEventById(eventId);
 		if (event == null) {
@@ -73,7 +73,7 @@ public class EventController {
 	}
 
 	@RequestMapping(value = "/event/deleteEvent/{eventId}", method = RequestMethod.DELETE)
-	public ResponseEntity<Void> deleteEvent(@PathVariable("eventId") String eventId) {
+	public ResponseEntity<Void> deleteEvent(@PathVariable("eventId") int eventId) {
 		System.out.println("----Starting delete in Eventcontroller");
 		Event event = eventService.getEventById(eventId);
 		if (event == null)
@@ -83,7 +83,7 @@ public class EventController {
 	}
 
 	@RequestMapping(value = "/event/updateEvent/{eventId}", method = RequestMethod.PUT)
-	public ResponseEntity<Event> updateEvent(@PathVariable("eventId") String eventId, @RequestBody Event event) {
+	public ResponseEntity<Event> updateEvent(@PathVariable("eventId") int eventId, @RequestBody Event event) {
 		Date date = new Date();
 		event.setEventCreatedDate(date.toString());
 		Event updatedEvent = eventService.updateEvent(eventId, event);
