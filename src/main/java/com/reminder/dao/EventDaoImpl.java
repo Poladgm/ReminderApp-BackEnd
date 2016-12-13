@@ -88,6 +88,7 @@ public class EventDaoImpl implements EventDao {
 		System.out.println("Before status in DAO :" + event.getStatus());
 		session.update(event);
 		System.out.println("After status in DAO :" + event.getStatus());
+		session.flush();
 		session.close();
 	}
 
