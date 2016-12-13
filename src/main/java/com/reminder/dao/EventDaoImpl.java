@@ -6,6 +6,7 @@ import javax.transaction.Transactional;
 
 import org.hibernate.HibernateException;
 import org.hibernate.Query;
+import org.hibernate.SQLQuery;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -31,6 +32,27 @@ public class EventDaoImpl implements EventDao {
 	public List<Event> getMyEvents(String userId) {
 		String hql = "from Event where userId='" + userId + "' ";
 		Query query = sessionFactory.openSession().createQuery(hql);
+
+		List<Event> events = (List<Event>) query.list();
+		return events;
+	}
+
+	@Transactional
+	public List<Event> getCompletedEvents(String userId) {
+		// C -> Completed
+		String hql = "from Event where userId='" + userId + "' and status='C'";
+		Query query = sessionFactory.openSession().createQuery(hql);
+
+		List<Event> events = (List<Event>) query.list();
+		return events;
+	}
+
+	@Transactional
+	public List<Event> getUnCompletedEvents(String userId) {
+		// U -> UnCompleted
+		String hql = "from Event where userId='" + userId + "' and status='U'";
+		Query query = sessionFactory.openSession().createQuery(hql);
+
 		List<Event> events = (List<Event>) query.list();
 		return events;
 	}
@@ -57,6 +79,16 @@ public class EventDaoImpl implements EventDao {
 			e.printStackTrace();
 			return false;
 		}
+	}
+
+	@Transactional
+	public void updateStatus(Event event) {
+		Session session = sessionFactory.openSession();
+		System.out.println(event.getEventId());
+		System.out.println("Before status in DAO :" + event.getStatus());
+		session.update(event);
+		System.out.println("After status in DAO :" + event.getStatus());
+		session.close();
 	}
 
 	@Transactional

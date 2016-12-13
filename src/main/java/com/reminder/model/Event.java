@@ -21,6 +21,15 @@ public class Event extends BaseDomain {
 	private String eventCreatedDate;
 	private String deadLine;
 	private String userId;
+	private String status;
+
+	public String getStatus() {
+		return status;
+	}
+
+	public void setStatus(String status) {
+		this.status = status;
+	}
 
 	public String getUserId() {
 		return userId;

@@ -19,6 +19,16 @@ public class EventServiceImpl implements EventService {
 		return eventDao.getMyEvents(userId);
 	}
 
+	public List<Event> getCompletedEvents(String userId) {
+		// TODO Auto-generated method stub
+		return eventDao.getCompletedEvents(userId);
+	}
+
+	public List<Event> getUnCompletedEvents(String userId) {
+		// TODO Auto-generated method stub
+		return eventDao.getUnCompletedEvents(userId);
+	}
+
 	public Event getEventById(int eventId) {
 		// TODO Auto-generated method stub
 		return eventDao.getEventById(eventId);
@@ -27,6 +37,11 @@ public class EventServiceImpl implements EventService {
 	public boolean saveEvent(Event event) {
 		// TODO Auto-generated method stub
 		return eventDao.saveEvent(event);
+	}
+
+	public void updateStatus(Event event) {
+		// TODO Auto-generated method stub
+		eventDao.updateStatus(event);
 	}
 
 	public Event updateEvent(int eventId, Event event) {

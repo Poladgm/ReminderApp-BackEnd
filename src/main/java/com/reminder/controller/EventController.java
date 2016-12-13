@@ -47,6 +47,32 @@ public class EventController {
 		return new ResponseEntity<List<Event>>(events, HttpStatus.OK);
 	}
 
+	@RequestMapping(value = "/event/getCompletedEvents", method = RequestMethod.GET)
+	public ResponseEntity<List<Event>> getCompletedAllEvents(HttpSession session) {
+		System.out.println("----Starting getCompletedEvents in EventController");
+		String loggedInUser = (String) session.getAttribute("loggedInUserId");
+		List<Event> events = eventService.getCompletedEvents(loggedInUser);
+		if (events.isEmpty()) {
+			event.setErrorCode("404");
+			event.setErrorMessage("No event available");
+			events.add(event);
+		}
+		return new ResponseEntity<List<Event>>(events, HttpStatus.OK);
+	}
+
+	@RequestMapping(value = "/event/getUnCompletedEvents", method = RequestMethod.GET)
+	public ResponseEntity<List<Event>> getUnCompletedEvents(HttpSession session) {
+		System.out.println("----Starting getUnCompletedEvents in EventController");
+		String loggedInUser = (String) session.getAttribute("loggedInUserId");
+		List<Event> events = eventService.getUnCompletedEvents(loggedInUser);
+		if (events.isEmpty()) {
+			event.setErrorCode("404");
+			event.setErrorMessage("No event available");
+			events.add(event);
+		}
+		return new ResponseEntity<List<Event>>(events, HttpStatus.OK);
+	}
+
 	@RequestMapping(value = "/event/getEventById/{eventId}", method = RequestMethod.GET)
 	public ResponseEntity<Event> getEventById(@PathVariable("eventId") int eventId) {
 		System.out.println("----Starting getBId in EventController----");
@@ -67,6 +93,7 @@ public class EventController {
 		Date date = new Date();
 		event.setEventCreatedDate(date.toString());
 		event.setUserId(loggedInUser);
+		event.setStatus("U");
 		eventService.saveEvent(event);
 		return new ResponseEntity<Void>(HttpStatus.OK);
 
@@ -91,6 +118,28 @@ public class EventController {
 		event.setErrorMessage("Updated Successfully");
 		return new ResponseEntity<Event>(updatedEvent, HttpStatus.OK);
 
+	}
+
+	@RequestMapping(value = "/completed/{eventId}", method = RequestMethod.GET)
+	public ResponseEntity<Event> Completed(@PathVariable("eventId") int eventId, Event event) {
+		System.out.println("-----Calling completed Method in Controller");
+		event = eventService.getEventById(eventId);
+		System.out.println("Before Event" + event.getStatus());
+		event.setStatus("C");
+		System.out.println("After Event" + event.getStatus());
+		eventService.updateStatus(event);
+		return new ResponseEntity<Event>(event, HttpStatus.OK);
+	}
+
+	@RequestMapping(value = "/Uncompleted/{eventId}", method = RequestMethod.GET)
+	public ResponseEntity<Event> unCompleted(@PathVariable("eventId") int eventId, Event event) {
+		System.out.println("-----Calling uncompleted Method in Controller");
+		event = eventService.getEventById(eventId);
+		System.out.println("Before Event" + event.getStatus());
+		event.setStatus("U");
+		System.out.println("After Event" + event.getStatus());
+		eventService.updateStatus(event);
+		return new ResponseEntity<Event>(event, HttpStatus.OK);
 	}
 
 }
