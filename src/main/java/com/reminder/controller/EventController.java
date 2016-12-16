@@ -96,7 +96,6 @@ public class EventController {
 		event.setStatus("U");
 		eventService.saveEvent(event);
 		return new ResponseEntity<Void>(HttpStatus.OK);
-
 	}
 
 	@RequestMapping(value = "/event/deleteEvent/{eventId}", method = RequestMethod.DELETE)

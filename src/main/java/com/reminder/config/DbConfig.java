@@ -14,6 +14,7 @@ import org.springframework.transaction.annotation.EnableTransactionManagement;
 
 import com.reminder.model.Event;
 import com.reminder.model.User;
+import com.reminder.model.contactUs;
 
 @Configuration
 @EnableTransactionManagement
@@ -26,7 +27,7 @@ public class DbConfig {
 		hibernateProperties.setProperty("hibernate.hbm2ddl.auto", "update");
 		hibernateProperties.setProperty("hibernate.show_sql", "true");
 		lsf.addProperties(hibernateProperties);
-		return lsf.addAnnotatedClass(User.class).addAnnotatedClass(Event.class).buildSessionFactory();
+		return lsf.addAnnotatedClass(User.class).addAnnotatedClass(Event.class).addAnnotatedClass(contactUs.class).buildSessionFactory();
 
 	}
 
